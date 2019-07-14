@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>OCR</title>
+      <link href="/2019/07/13/OCR/"/>
+      <url>/2019/07/13/OCR/</url>
+      
+        <content type="html"><![CDATA[<p>记录一次简单的OCR安装过程<br><a id="more"></a></p><h2 id="需要环境"><a href="#需要环境" class="headerlink" title="需要环境"></a>需要环境</h2><ul><li>python 3.6+</li><li>python PTL库（自带）</li><li>文字识别引擎：pytesseract(python模块)</li><li>Tesseract Ocr 光学文字识别引擎</li></ul><h2 id="安装流程"><a href="#安装流程" class="headerlink" title="安装流程"></a>安装流程</h2><ol><li>安装python模块<blockquote><p>pip install pytesseract</p></blockquote></li><li>安装tesseract orc<br> 下载地址：(<a href="https://github.com/UB-Mannheim/tesseract/wiki" target="_blank" rel="noopener">https://github.com/UB-Mannheim/tesseract/wiki</a>) <label style="color:red">注意选择中文包</label></li><li><p>配置tesseract运行文件<br> 之前python安装的pytesseract.py中找到</p><blockquote><p>tesseract_cmd = ‘tesseract’</p></blockquote><p> 改成：</p><blockquote><p>tesseract_cmd = ‘[你的安装路径]/Tesseract-OCR/tesseract.exe’</p></blockquote></li><li>代码实现 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> pytesseract</span><br><span class="line"></span><br><span class="line">path = <span class="string">"img\\text-img.png"</span></span><br><span class="line"></span><br><span class="line">text = pytesseract.image_to_string(Image.open(path), lang=<span class="string">'chi_sim'</span>)</span><br><span class="line">print(text)</span><br></pre></td></tr></table></figure></li></ol><p>实现效果：<br><img src="https://i.loli.net/2019/07/13/5d2997acb3eb850473.png" alt="orcshow.png"></p><h2 id="训练自己的数据模型"><a href="#训练自己的数据模型" class="headerlink" title="训练自己的数据模型"></a>训练自己的数据模型</h2><p>像上面这样没有任何数据模型的训练，也就只能识别一些无干扰，字迹清楚的文字，如果要识别一些特意增加识别难度的图片，譬如验证码，或者是一些手写字体，就需要经过训练来提升准确度了。</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 后端 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 技术 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>first_blog</title>
       <link href="/2019/07/05/first-blog/"/>
       <url>/2019/07/05/first-blog/</url>

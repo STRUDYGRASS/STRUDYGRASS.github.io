@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="en"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="OCR"><meta name="keywords" content="技术"><meta name="author" content="Yunfei Zhang"><meta name="copyright" content="Yunfei Zhang"><title>OCR | grassbloomy</title><link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><link rel="manifest" href="/manifest.json"><link rel="manifest" href="/manifest.json"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#需要环境"><span class="toc-number">1.</span> <span class="toc-text">需要环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装流程"><span class="toc-number">2.</span> <span class="toc-text">安装流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#训练自己的数据模型"><span class="toc-number">3.</span> <span class="toc-text">训练自己的数据模型</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">Yunfei Zhang</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">3</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">1</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">2</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://i.loli.net/2019/07/06/5d2043345129b66140.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">grassbloomy</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">OCR</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-07-13</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/后端/">后端</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>记录一次简单的OCR安装过程<br><a id="more"></a></p>
+<h2 id="需要环境"><a href="#需要环境" class="headerlink" title="需要环境"></a>需要环境</h2><ul>
+<li>python 3.6+</li>
+<li>python PTL库（自带）</li>
+<li>文字识别引擎：pytesseract(python模块)</li>
+<li>Tesseract Ocr 光学文字识别引擎</li>
+</ul>
+<h2 id="安装流程"><a href="#安装流程" class="headerlink" title="安装流程"></a>安装流程</h2><ol>
+<li>安装python模块<blockquote>
+<p>pip install pytesseract</p>
+</blockquote>
+</li>
+<li>安装tesseract orc<br> 下载地址：(<a href="https://github.com/UB-Mannheim/tesseract/wiki" target="_blank" rel="noopener">https://github.com/UB-Mannheim/tesseract/wiki</a>) <label style="color:red">注意选择中文包</label></li>
+<li><p>配置tesseract运行文件<br> 之前python安装的pytesseract.py中找到</p>
+<blockquote>
+<p>tesseract_cmd = ‘tesseract’</p>
+</blockquote>
+<p> 改成：</p>
+<blockquote>
+<p>tesseract_cmd = ‘[你的安装路径]/Tesseract-OCR/tesseract.exe’</p>
+</blockquote>
+</li>
+<li>代码实现 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> pytesseract</span><br><span class="line"></span><br><span class="line">path = <span class="string">"img\\text-img.png"</span></span><br><span class="line"></span><br><span class="line">text = pytesseract.image_to_string(Image.open(path), lang=<span class="string">'chi_sim'</span>)</span><br><span class="line">print(text)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>实现效果：<br><img src="https://i.loli.net/2019/07/13/5d2997acb3eb850473.png" alt="orcshow.png"></p>
+<h2 id="训练自己的数据模型"><a href="#训练自己的数据模型" class="headerlink" title="训练自己的数据模型"></a>训练自己的数据模型</h2><p>像上面这样没有任何数据模型的训练，也就只能识别一些无干扰，字迹清楚的文字，如果要识别一些特意增加识别难度的图片，譬如验证码，或者是一些手写字体，就需要经过训练来提升准确度了。</p>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/技术/">技术</a></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/07/05/first-blog/"><span>first_blog</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://i.loli.net/2019/07/06/5d2043345129b66140.png)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By Yunfei Zhang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
