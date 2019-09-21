@@ -8,50 +8,56 @@
     noSupport: 'The browser does not support'
   }
 } </script></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#No-such-file……用户权限问题"><span class="toc-number">1.</span> <span class="toc-text">No such file……用户权限问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#防火墙问题"><span class="toc-number">2.</span> <span class="toc-text">防火墙问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cannot-find-java…"><span class="toc-number">3.</span> <span class="toc-text">cannot find java…</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#regionserver-HRegionServer-Failed-construction-RegionServer"><span class="toc-number">4.</span> <span class="toc-text">regionserver.HRegionServer: Failed construction RegionServer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#failed-Address-already-in-use"><span class="toc-number">5.</span> <span class="toc-text">failed: Address already in use</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#regionserver-HRegionServer-Failed-construction-RegionServer-1"><span class="toc-number">6.</span> <span class="toc-text">regionserver.HRegionServer: Failed construction RegionServer</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bind-xxx-jar-conflict-等类似问题"><span class="toc-number">7.</span> <span class="toc-text">bind xxx.jar conflict 等类似问题</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">Yunfei Zhang</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">5</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">3</span></a><a class="author-info-articles__categories article-meta" href="/categories"><span class="pull-left">Categories</span><span class="pull-right">1</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://i.loli.net/2019/07/06/5d2043345129b66140.png)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">grassbloomy</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">hadoop和hbase安装遇到的坑</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-09-17</time><span class="post-meta__separator">|</span><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/技术/">技术</a></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>在服务器上安装hadoop和在hdfs上配置hbase遇到了一些问题，这里做一个总结。<br><a id="more"></a></p>
-<h1 id="No-such-file……用户权限问题"><a href="#No-such-file……用户权限问题" class="headerlink" title="No such file……用户权限问题"></a>No such file……用户权限问题</h1><pre><code>遇到找不到文件，日志中显示无法读取或者运行程序，第一时间应该检查目前用户是否有读写和运行权限。
-修改文件（夹）所属用户:
-&gt;    chown [-cfhvR] [--help] [--version] user[:group] file...
-
-* user : 新的文件拥有者的使用者 ID
-* group : 新的文件拥有者的使用者组(group)
-* -c : 显示更改的部分的信息
-* -f : 忽略错误信息
-* -h :修复符号链接
-* -v : 显示详细的处理信息
-* -R : 处理指定目录以及其子目录下的所有文件
-* --help : 显示辅助说明
-* --version : 显示版本
-
-
-修改文件（夹）权限
-&gt;    chmod [-cfvR] [--help] [--version] mode file...
-
-mode : 权限设定字串，格式如下 :
-&gt;    [ugoa...][[+-=][rwxX]...][,...]
-&gt;    u 表示该文件的拥有者，g 表示与该文件的拥有者属于同一个群体(group)者，o 表示其他以外的人，a 表示这三者皆是。
-&gt;    + 表示增加权限、- 表示取消权限、= 表示唯一设定权限。
-&gt;    r 表示可读取，w 表示可写入，x 表示可执行，X 表示只有当该文件是个子目录或者该文件已经被设定过为可执行。
-
-* -c : 若该文件权限确实已经更改，才显示其更改动作
-* -f : 若该文件权限无法被更改也不要显示错误讯息
-* -v : 显示权限变更的详细资料
-* -R : 对目前目录下的所有文件与子目录进行相同的权限变更(即以递回的方式逐个变更)
-* --help : 显示辅助说明
-* --version : 显示版本
-</code></pre><h1 id="防火墙问题"><a href="#防火墙问题" class="headerlink" title="防火墙问题"></a>防火墙问题</h1><pre><code>&lt;strong&gt;如果是租用的服务器，除了系统自带的防火墙外，还可能需要在租用服务器的界面上配置防火墙，巨坑!!&lt;/strong&gt;
-</code></pre><h1 id="cannot-find-java…"><a href="#cannot-find-java…" class="headerlink" title="cannot find java…"></a>cannot find java…</h1><pre><code>遇到这一类问题，一律先查看自己的JAVA_HOME环境变量，有的时候即使已经在/etc/profile中配置了环境变量，还需要在hadoop-env.sh,hbase-env.sh中再导入一次，我也无法解释。
-</code></pre><h1 id="regionserver-HRegionServer-Failed-construction-RegionServer"><a href="#regionserver-HRegionServer-Failed-construction-RegionServer" class="headerlink" title="regionserver.HRegionServer: Failed construction RegionServer"></a>regionserver.HRegionServer: Failed construction RegionServer</h1><pre><code>优先考虑hosts文件的问题，需要在hosts文件中配置
-&gt;    127.0.0.1 hbase-master
-</code></pre><h1 id="failed-Address-already-in-use"><a href="#failed-Address-already-in-use" class="headerlink" title="failed: Address already in use"></a>failed: Address already in use</h1><pre><code>有人说是因为zookeeper已经启动了，可能是这个原因，但还可能是其他情况，根本解决办法是检查该端口被什么程序占用，并kill掉它。
-&gt;    netstat -tunpl |grep [端口号]        //查询该端口占用程序的进程ID
-&gt;    ps -ef|grep [ID]                    //查询该进程的详细信息
-接着就可以选择是关闭服务还是直接kill掉进程了
-</code></pre><h1 id="regionserver-HRegionServer-Failed-construction-RegionServer-1"><a href="#regionserver-HRegionServer-Failed-construction-RegionServer-1" class="headerlink" title="regionserver.HRegionServer: Failed construction RegionServer"></a>regionserver.HRegionServer: Failed construction RegionServer</h1><pre><code>如果是建立在HDFS的HBASE不能照抄官网的配置，修改$HBASE_HOME/conf/hbase-site.xml,要与hadoop的core-site.xml一致
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  &lt;property&gt;</span><br><span class="line">	&lt;name&gt;hbase.rootdir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;hdfs://localhost:9000/hbase&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure>
-
-需要使用 hdfs://hostname/user 而不是 hdfs://user 。
-</code></pre><h1 id="bind-xxx-jar-conflict-等类似问题"><a href="#bind-xxx-jar-conflict-等类似问题" class="headerlink" title="bind xxx.jar conflict 等类似问题"></a>bind xxx.jar conflict 等类似问题</h1><pre><code>hadoop和hbase的jar包冲突了，将hbase/lib中的jar包改名或者删除就好了
-</code></pre></div></article><div class="post-meta__tag-list"></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/07/14/初步利用开源facenet框架和已有模型进行人脸识别测试/"><span>初步利用开源facenet框架和已有模型进行人脸识别测试</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://i.loli.net/2019/07/06/5d2043345129b66140.png)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By Yunfei Zhang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+<h1 id="No-such-file……用户权限问题"><a href="#No-such-file……用户权限问题" class="headerlink" title="No such file……用户权限问题"></a>No such file……用户权限问题</h1><p>遇到找不到文件，日志中显示无法读取或者运行程序，第一时间应该检查目前用户是否有读写和运行权限。<br>修改文件（夹）所属用户:</p>
+<blockquote>
+<p>   chown [-cfhvR] [–help] [–version] user[:group] file…</p>
+</blockquote>
+<ul>
+<li>user : 新的文件拥有者的使用者 ID</li>
+<li>group : 新的文件拥有者的使用者组(group)</li>
+<li>-c : 显示更改的部分的信息</li>
+<li>-f : 忽略错误信息</li>
+<li>-h :修复符号链接</li>
+<li>-v : 显示详细的处理信息</li>
+<li>-R : 处理指定目录以及其子目录下的所有文件</li>
+<li>–help : 显示辅助说明</li>
+<li>–version : 显示版本</li>
+</ul>
+<p>修改文件（夹）权限</p>
+<blockquote>
+<p>   chmod [-cfvR] [–help] [–version] mode file…</p>
+</blockquote>
+<p>mode : 权限设定字串，格式如下 :</p>
+<blockquote>
+<p>   [ugoa…][[+-=][rwxX]…][,…]</p>
+<ul>
+<li>u 表示该文件的拥有者，g 表示与该文件的拥有者属于同一个群体(group)者，o 表示其他以外的人，a 表示这三者皆是。</li>
+<li>+ 表示增加权限、- 表示取消权限、= 表示唯一设定权限。</li>
+<li>r 表示可读取，w 表示可写入，x 表示可执行，X 表示只有当该文件是个子目录或者该文件已经被设定过为可执行。</li>
+</ul>
+</blockquote>
+<ul>
+<li>-c : 若该文件权限确实已经更改，才显示其更改动作</li>
+<li>-f : 若该文件权限无法被更改也不要显示错误讯息</li>
+<li>-v : 显示权限变更的详细资料</li>
+<li>-R : 对目前目录下的所有文件与子目录进行相同的权限变更(即以递回的方式逐个变更)</li>
+<li>–help : 显示辅助说明</li>
+<li>–version : 显示版本</li>
+</ul>
+<h1 id="防火墙问题"><a href="#防火墙问题" class="headerlink" title="防火墙问题"></a>防火墙问题</h1><p><strong>如果是租用的服务器，除了系统自带的防火墙外，还可能需要在租用服务器的界面上配置防火墙，巨坑!!</strong></p>
+<h1 id="cannot-find-java…"><a href="#cannot-find-java…" class="headerlink" title="cannot find java…"></a>cannot find java…</h1><p>遇到这一类问题，一律先查看自己的JAVA_HOME环境变量，有的时候即使已经在/etc/profile中配置了环境变量，还需要在hadoop-env.sh,hbase-env.sh中再导入一次，我也无法解释。</p>
+<h1 id="regionserver-HRegionServer-Failed-construction-RegionServer"><a href="#regionserver-HRegionServer-Failed-construction-RegionServer" class="headerlink" title="regionserver.HRegionServer: Failed construction RegionServer"></a>regionserver.HRegionServer: Failed construction RegionServer</h1><p>优先考虑hosts文件的问题，需要在hosts文件中配置</p>
+<blockquote>
+<p>   127.0.0.1 hbase-master</p>
+</blockquote>
+<h1 id="failed-Address-already-in-use"><a href="#failed-Address-already-in-use" class="headerlink" title="failed: Address already in use"></a>failed: Address already in use</h1><p>有人说是因为zookeeper已经启动了，可能是这个原因，但还可能是其他情况，根本解决办法是检查该端口被什么程序占用，并kill掉它。</p>
+<blockquote>
+<p>   netstat -tunpl |grep [端口号]        //查询该端口占用程序的进程ID<br>   ps -ef|grep [ID]                    //查询该进程的详细信息<br>接着就可以选择是关闭服务还是直接kill掉进程了</p>
+</blockquote>
+<h1 id="regionserver-HRegionServer-Failed-construction-RegionServer-1"><a href="#regionserver-HRegionServer-Failed-construction-RegionServer-1" class="headerlink" title="regionserver.HRegionServer: Failed construction RegionServer"></a>regionserver.HRegionServer: Failed construction RegionServer</h1><p>如果是建立在HDFS的HBASE不能照抄官网的配置，修改$HBASE_HOME/conf/hbase-site.xml,要与hadoop的core-site.xml一致<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">  &lt;property&gt;</span><br><span class="line">	&lt;name&gt;hbase.rootdir&lt;/name&gt;</span><br><span class="line">	&lt;value&gt;hdfs://localhost:9000/hbase&lt;/value&gt;</span><br><span class="line">&lt;/property&gt;</span><br></pre></td></tr></table></figure></p>
+<p>需要使用 hdfs://hostname/user 而不是 hdfs://user 。</p>
+<h1 id="bind-xxx-jar-conflict-等类似问题"><a href="#bind-xxx-jar-conflict-等类似问题" class="headerlink" title="bind xxx.jar conflict 等类似问题"></a>bind xxx.jar conflict 等类似问题</h1><p>hadoop和hbase的jar包冲突了，将hbase/lib中的jar包改名或者删除就好了</p>
+</div></article><div class="post-meta__tag-list"></div><nav id="pagination"><div class="next-post pull-right"><a href="/2019/07/14/初步利用开源facenet框架和已有模型进行人脸识别测试/"><span>初步利用开源facenet框架和已有模型进行人脸识别测试</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://i.loli.net/2019/07/06/5d2043345129b66140.png)"><div class="layout" id="footer"><div class="copyright">&copy;2019 By Yunfei Zhang</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
   $('#nav').addClass('is-mobile')
   $('footer').addClass('is-mobile')
 }</script></body></html>
